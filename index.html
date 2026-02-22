@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNCMA e-Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #003087, #0056b3);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #856404;
+            margin-bottom: 20px;
+        }
+
+        .portal-box {
+            background: white;
+            border: 3px solid #003087;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #003087;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #003087;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #003087;
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            background: #003087;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .file-label:hover {
+            background: #002060;
+        }
+
+        .file-preview {
+            margin-top: 5px;
+            max-width: 100%;
+            max-height: 100px;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #c82333;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .challan {
+            display: none;
+            background: white;
+            border: 3px solid #28a745;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .challan h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .ref-no {
+            font-size: 20px;
+            font-weight: bold;
+            color: #003087;
+            margin-bottom: 20px;
+        }
+
+        .challan-slip {
+            background: white;
+            border: 2px solid #003087;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+        .hindi-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #003087;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .english-title {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .images-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .image-placeholder {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+            background: #f8f9fa;
+        }
+
+        .image-preview-slip {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+
+            .portal-box,
+            .challan {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .download-section {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .challan-slip {
+                box-shadow: none;
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header no-print">
+        <div class="logo">🏛️ CNCMA</div>
+        <div>🚨 Government of Non-Chalant 🚨<br><small>This website is purely for entertainment. Not affiliated with any
+                government entity.</small></div>
+        <div>📱 LOGIN</div>
+    </div>
+    <div class="disclaimer no-print">
+        ⚠️ Teen-rated fun only.
+    </div>
+
+    <div class="portal-box" id="formBox">
+        <h1>CNCMA e-Portal</h1>
+        <p class="subtitle">Challan Non-Chalant Management Authority e-Portal</p>
+        <form id="challanForm">
+            <div class="section">
+                <h3>SECTION I: PARTICULARS</h3>
+                <div class="form-group">
+                    <label>ACCUSED (Boyfriend)</label>
+                    <input type="text" id="accused" required>
+                </div>
+                <div class="form-group">
+                    <label>VICTIM (Girlfriend)</label>
+                    <input type="text" id="victim" required>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>SECTION II: INCIDENT</h3>
+                <div class="form-group">
+                    <label>PLACE</label>
+                    <input type="text" id="place" required>
+                </div>
+                <div class="form-group">
+                    <label>DATE</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="repeat">
+                    <label for="repeat">IS REPEAT VIOLATOR?</label>
+                </div>
+                <div class="form-group">
+                    <label>OFFENCE</label>
+                    <select id="offence" required>
+                        <option value="">Select Offence</option>
+                        <option>Not watching reels sent by partner 🤳</option>
+                        <option>Leaving the toilet seat up 🚽</option>
+                        <option>Not asking 'what happened' when she said 'I'm fine'</option>
+                        <option>Zoning out during important gossip session 😵</option>
+                        <option>Replying with 'K' or '👍'</option>
+                        <option>Forgot Month-iversary 🙄</option>
+                        <option>Breathing too loudly 🫁</option>
+                        <option>Other...</option>
+                    </select>
+                    <textarea id="otherOffence" style="display:none; margin-top:10px;"
+                        placeholder="Describe other offence"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>EVIDENCE (optional; choose up to 3)</label>
+                    <p style="font-size:12px; color:#666;">*Your images remain on your device. We do not store or retain
+                        any sensitive information.</p>
+                    <div class="evidence-grid">
+                        <div class="file-input-wrapper">
+                            <input type="file" id="evidence1" class="file-input" accept="image/*">
+                            <label for="evidence1" class="file-label">📸 Evidence 1</label>
+                            <img id="preview1" class="file-preview" style="display:none;">
+                        </div>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="evidence2" class="file-input" accept="image/*">
+                            <label for="evidence2" class="file-label">📸 Evidence 2</label>
+                            <img id="preview2" class="file-preview" style="display:none;">
+                        </div>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="evidence3" class="file-input" accept="image/*">
+                            <label for="evidence3" class="file-label">📸 Evidence 3</label>
+                            <img id="preview3" class="file-preview" style="display:none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>SECTION III: PENALTY</h3>
+                <div class="form-group">
+                    <label>PAYMENT MODE</label>
+                    <select id="payment" required>
+                        <option value="">Select Mode</option>
+                        <option>ROSES 💐</option>
+                        <option>CASH / UPI 💰</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>FINE (QTY)</label>
+                    <input type="number" id="fine" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>REMARKS</label>
+                    <textarea id="remarks" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="declare" required>
+                        I hereby declare that the information above is true to my overthinking and delusion.
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" id="issueBtn">⚖️ ISSUE OFFICIAL CHALLAN</button>
+        </form>
+    </div>
+
+    <div class="challan" id="challanBox">
+        <h2>🎉 CHALLAN ISSUED SUCCESSFULLY! 🎉</h2>
+        <div class="ref-no" id="refNo"></div>
+        <div id="challanSlip"></div>
+        <div class="download-section no-print">
+            <button class="btn btn-success" onclick="downloadImage()">⬇️ Download Image</button>
+            <button class="btn btn-secondary" onclick="downloadPDF()">⬇️ Download PDF</button>
+            <button class="btn" onclick="resetForm()">🔄 New Challan</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('challanForm');
+        const formBox = document.getElementById('formBox');
+        const challanBox = document.getElementById('challanBox');
+        const issueBtn = document.getElementById('issueBtn');
+        let uploadedImages = [];
+
+        // Dynamic offence other
+        document.getElementById('offence').addEventListener('change', function () {
+            const other = document.getElementById('otherOffence');
+            if (this.value === 'Other...') {
+                other.style.display = 'block';
+                other.required = true;
+            } else {
+                other.style.display = 'none';
+                other.required = false;
+                other.value = '';
+            }
+        });
+
+        // File previews and store images
+        ['1', '2', '3'].forEach(i => {
+            const input = document.getElementById(`evidence${i}`);
+            const preview = document.getElementById(`preview${i}`);
+            input.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        uploadedImages[i - 1] = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        // Generate ref no
+        function generateRef() {
+            const year = new Date().getFullYear();
+            const num = Math.floor(Math.random() * 900) + 100;
+            return `CNCMA/${year}/${420}-${num}`;
+        }
+
+        // Form submit
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!document.getElementById('declare').checked) {
+                alert('Please declare!');
+                return;
+            }
+
+            const data = {
+                ref: generateRef(),
+                date: new Date().toLocaleDateString('en-IN'),
+                accused: document.getElementById('accused').value,
+                victim: document.getElementById('victim').value,
+                place: document.getElementById('place').value,
+                dateInc: document.getElementById('date').value,
+                repeat: document.getElementById('repeat').checked ? 'YES' : 'NO',
+                offence: document.getElementById('offence').value === 'Other...' ?
+                    document.getElementById('otherOffence').value : document.getElementById('offence').value,
+                payment: document.getElementById('payment').value,
+                fine: document.getElementById('fine').value,
+                remarks: document.getElementById('remarks').value
+            };
+
+            document.getElementById('refNo').textContent = data.ref;
+
+            const imagesHtml = uploadedImages.map((img, i) =>
+                img ? `<img src="${img}" class="image-preview-slip" alt="Evidence ${i + 1}">` :
+                    `<div class="image-placeholder"><small><image ${i + 1}></small></div>`
+            ).join('');
+
+            const challanHtml = `
+                <div class="challan-slip">
+                    <div class="hindi-title">चालान-और लापरवाह पुरुष संघ</div>
+                    <div class="english-title">Challan-ed Non-Chalant Men Association<br>
+                    (स्वस्थ पुरुष गुणों की खेती अधिनियम, 2026 उल्लंघन रिपोर्ट)<br>
+                    (Infringement Report under Cultivation of Healthy Masculine Virtues Act, 2026)</div>
+                    
+                    <div class="images-section">
+                        <strong>Relevant Images</strong>
+                        <div class="images-grid">${imagesHtml}</div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;"><strong>Violator name:</strong> ${data.accused}</div>
+                    <div style="margin: 10px 0;"><strong>Violation victim:</strong> ${data.victim}</div>
+                    <div style="margin: 10px 0;"><strong>Challan number:</strong> ${data.ref}</div>
+                    <div style="margin: 10px 0;"><strong>Date of incident:</strong> ${data.dateInc}</div>
+                    <div style="margin: 10px 0;"><strong>Place of incident:</strong> ${data.place}</div>
+                    <div style="margin: 10px 0;"><strong>Is repeat violator?:</strong> ${data.repeat}</div>
+                    <div style="margin: 20px 0;"><strong>Offences charged with:</strong><br>1. ${data.offence}</div>
+                    <div style="margin: 20px 0;"><strong>ऊपर बताए गए जुर्म के लिए तय जुर्माना:</strong> ${data.fine}/- ${data.payment.includes('ROSES') ? 'Roses' : 'रुपये'}</div>
+                    <div style="margin: 10px 0;"><strong>Penalty specified against above offence charged:</strong> ${data.fine}/- INR</div>
+                    <div style="margin: 20px 0;"><strong>Remarks:</strong> ${data.remarks || 'N/A'}</div>
+                    
+                    <div style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #ddd; padding-top: 10px;">
+                        Generated by National Informatics Centre for Heartbreak (NIC-H). 
+                        Visit <a href="https://echalant.xyz/" style="color: #003087;">www.echalant.xyz</a> for more information.
+                    </div>
+                </div>
+            `;
+            document.getElementById('challanSlip').innerHTML = challanHtml;
+
+            formBox.style.display = 'none';
+            challanBox.style.display = 'block';
+            window.scrollTo(0, 0);
+        });
+
+        // Download as Image
+        function downloadImage() {
+            const challanSlip = document.querySelector('.challan-slip');
+            html2canvas(challanSlip, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `challan_${document.getElementById('refNo').textContent}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        // Download as PDF (requires html2canvas & jsPDF)
+        function downloadPDF() {
+            const challanSlip = document.querySelector('.challan-slip');
+            html2canvas(challanSlip, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 10;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight + 10;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save(`challan_${document.getElementById('refNo').textContent}.pdf`);
+            });
+        }
+
+        function resetForm() {
+            form.reset();
+            document.getElementById('otherOffence').style.display = 'none';
+            uploadedImages = [];
+            ['1', '2', '3'].forEach(i => document.getElementById(`preview${i}`).style.display = 'none');
+            challanBox.style.display = 'none';
+            formBox.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+
+</html>
